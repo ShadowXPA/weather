@@ -1,2 +1,3 @@
 # Weather
-The typical Weather app using OpenWeatherMap and Geocoding APIs
+
+The typical Weather app using [OpenWeatherMap](https://openweathermap.org/) and [Geocoding](https://geocode.maps.co) APIs.

@@ -1,0 +1,14 @@
+footer {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, .7);
+    color: #fff;
+    padding: .05rem 1rem;
+    border-radius: var(--bs-border-radius) 0 0 0;
+    font-size: .8rem;
+}
+
+footer a {
+    color: #fff;
+}

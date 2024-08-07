@@ -41,8 +41,8 @@ public class GeocodeApiService implements GeocodingApiService {
             log.info("Got response code: {}", httpStatus);
             if (httpStatus == HttpStatus.OK) {
                 String responseString = EntityUtils.toString(response.getEntity());
-                JsonArray jsonArray = JsonParser.parseString(responseString).getAsJsonArray();
-                JsonObject jsonObject = jsonArray.get(0).getAsJsonObject();
+                JsonArray root = JsonParser.parseString(responseString).getAsJsonArray();
+                JsonObject jsonObject = root.get(0).getAsJsonObject();
                 return Optional.of(new Coordinates(Double.parseDouble(jsonObject.get("lat").getAsString()),
                         Double.parseDouble(jsonObject.get("lon").getAsString())));
             }

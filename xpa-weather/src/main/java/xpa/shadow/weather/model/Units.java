@@ -1,6 +1,6 @@
 package xpa.shadow.weather.model;
 
-public enum Unit {
+public enum Units {
     METRIC,
     IMPERIAL
 }

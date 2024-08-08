@@ -1,0 +1,28 @@
+.weather .coordinates .name {
+    font-size: 1.3rem;
+    font-weight: bold;
+}
+
+.weather .coordinates .latitude,
+.weather .coordinates .longitude {
+    font-size: .8rem;
+    font-weight: 100;
+}
+
+.weather .condition .name {
+    font-size: 1.1rem;
+    font-weight: bold;
+}
+
+.weather .condition .description {
+    font-size: .9rem;
+}
+
+.weather .condition .temperature .real {
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.weather .condition .temperature .feel {
+    font-size: .9rem;
+}

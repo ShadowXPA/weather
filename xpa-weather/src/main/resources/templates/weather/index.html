@@ -2,9 +2,100 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout.html}">
+<head>
+    <link rel="stylesheet" th:href="@{~/css/weather.css}"/>
+</head>
 <body>
 <div layout:fragment="content">
-    Weather App =)
+    <div class="row mb-3 align-items-center justify-content-end">
+        <div class="col-auto btn-group" role="group">
+            <input type="radio" class="btn-check" name="theme" id="theme-day" value="day" autocomplete="off" checked/>
+            <label class="btn btn-outline-primary" for="theme-day"><i class="bi bi-brightness-high-fill"></i></label>
+            <input type="radio" class="btn-check" name="theme" id="theme-night" value="night" autocomplete="off"/>
+            <label class="btn btn-outline-primary" for="theme-night"><i class="bi bi-moon-stars-fill"></i></label>
+        </div>
+    </div>
+    <form id="weather-form" class="form mb-3" method="post">
+        <div class="configuration mb-3">
+            <div class="row mb-3 align-items-center justify-content-end">
+                <label for="weather-api-key" class="col-auto col-form-label">
+                    <a th:href="@{https://openweathermap.org/}" target="_blank">Weather API</a> key:
+                </label>
+                <div class="col-auto">
+                    <input id="weather-api-key" name="weather-api-key" th:value="${weatherApiKey}" type="text" class="form-control api-key"
+                           required/>
+                </div>
+            </div>
+            <div class="row mb-3 align-items-center justify-content-end">
+                <label for="geocoding-api-key" class="col-auto col-form-label">
+                    <a th:href="@{https://geocode.maps.co/}" target="_blank">Geocoding API</a> key:
+                </label>
+                <div class="col-auto">
+                    <input id="geocoding-api-key" name="geocoding-api-key" th:value="${geocodingApiKey}" type="text" class="form-control api-key"
+                           required/>
+                </div>
+            </div>
+            <div class="row mb-3 align-items-center justify-content-end">
+                <div class="col-auto btn-group" role="group">
+                    <input type="radio" class="btn-check" name="units" id="units-metric" value="metric"
+                           autocomplete="off" checked/>
+                    <label class="btn btn-outline-primary" for="units-metric">Metric</label>
+                    <input type="radio" class="btn-check" name="units" id="units-imperial" value="imperial"
+                           autocomplete="off"/>
+                    <label class="btn btn-outline-primary" for="units-imperial">Imperial</label>
+                </div>
+            </div>
+        </div>
+        <div class="location mb-3">
+            <div class="row align-items-center justify-content-center gap-3">
+                <label for="location" class="col-auto col-form-label">Location:</label>
+                <div class="col-sm-4">
+                    <input id="location" name="location" type="text" class="form-control" th:value="${location}" required/>
+                </div>
+                <button id="btn-weather" class="col-auto btn btn-primary" type="submit">
+                    <span><i class="bi bi-cloud-sun-fill px-2"></i>Get weather</span>
+                </button>
+                <button id="btn-location" class="col-auto btn btn-primary" type="button">
+                    <span><i class="bi bi-geo-alt-fill px-2"></i>Use my location</span>
+                </button>
+            </div>
+        </div>
+    </form>
+    <div class="weather row justify-content-center" th:if="${weather != null}">
+        <div class="location row align-items-center">
+            <div class="col-auto flag"><img th:src="@{'https://flagsapi.com/' + ${weather.countryCode} + '/flat/64.png'}"/></div>
+            <div class="col-auto coordinates">
+                <div class="name" th:text="${weather.coordinates.location}"></div>
+                <div class="latitude" th:text="${'Latitude: ' + weather.coordinates.latitude}"></div>
+                <div class="longitude" th:text="${'Longitude: ' + weather.coordinates.longitude}"></div>
+            </div>
+        </div>
+        <div class="condition row align-items-center">
+            <div class="col row align-items-center main">
+                <div class="col-auto icon"><img th:src="@{'https://openweathermap.org/img/wn/' + ${weather.icon} + '@4x.png'}"/></div>
+                <div class="col-auto">
+                    <div class="name" th:text="${weather.condition}"></div>
+                    <div class="description" th:text="${#strings.capitalize(weather.description)}"></div>
+                </div>
+            </div>
+            <div class="col temperature">
+                <div class="real" th:text="${'' + weather.temperature + ' º' + (isMetric ? 'C' : 'F')}"></div>
+                <div class="feel" th:text="${'Feels like: ' + weather.feelsLike + ' º' + (isMetric ? 'C' : 'F')}"></div>
+            </div>
+        </div>
+        <div class="details row">
+            <div class="local-date" th:text="${'Local date and time: ' + weather.getLocalDate()}"></div>
+            <div class="sunrise" th:text="${'Sunrise: ' + weather.getLocalSunrise()}"></div>
+            <div class="sunset" th:text="${'Sunset: ' + weather.getLocalSunset()}"></div>
+            <div class="wind-speed" th:text="${'Wind speed: ' + weather.windSpeed + ' ' + (isMetric ? 'm/s' : 'mph')}"></div>
+            <div class="wind-direction" th:text="${'Wind direction: ' + weather.windDirection + ' deg'}"></div>
+            <div class="humidity" th:text="${'Humidity: ' + weather.humidity + ' %'}"></div>
+            <div class="pressure-sea" th:text="${'Pressure (Sea level): ' + weather.pressure + ' hPa'}"></div>
+            <div class="pressure-ground" th:text="${'Pressure (Ground level): ' + weather.pressureGroundLevel + ' hPa'}"></div>
+            <div class="cloudiness" th:text="${'Cloudiness: ' + weather.cloudiness + ' %'}"></div>
+            <div class="visibility" th:text="${'Visibility: ' + weather.visibility + ' m'}"></div>
+        </div>
+    </div>
 </div>
 </body>
 </html>

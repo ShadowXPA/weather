@@ -18,9 +18,9 @@ public class WeatherService {
     @Autowired
     private WeatherApiService weatherApiService;
 
-    public Optional<Weather> getWeather(String geocodingApiKey, String weatherApiKey, String address, Units units) {
+    public Optional<Weather> getWeather(String geocodingApiKey, String weatherApiKey, String location, Units units) {
         log.info("Getting coordinates...");
-        Optional<Coordinates> coordinates = geocodingApiService.getCoordinates(geocodingApiKey, address);
+        Optional<Coordinates> coordinates = geocodingApiService.getCoordinates(geocodingApiKey, location);
 
         if (coordinates.isEmpty()) {
             log.warn("No coordinates were found!");
@@ -28,6 +28,13 @@ public class WeatherService {
         }
 
         log.info("Found coordinates, getting weather and forecast...");
-        return weatherApiService.getWeather(weatherApiKey, coordinates.get(), units);
+        Optional<Weather> weather = weatherApiService.getWeather(weatherApiKey, coordinates.get(), units);
+
+        weather.ifPresent(value -> {
+            value.setCoordinates(coordinates.get());
+            value.setUnits(units);
+        });
+
+        return weather;
     }
 }

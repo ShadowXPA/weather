@@ -30,7 +30,6 @@ public class OpenWeatherMapResponse {
                 .visibility(visibility)
                 .windSpeed(wind.speed)
                 .windDirection(wind.deg)
-                .windGust(wind.gust)
                 .cloudiness(clouds.all)
                 .datetime(dt)
                 .countryCode(sys.country)
@@ -59,7 +58,6 @@ public class OpenWeatherMapResponse {
     public static class Wind {
         private float speed;
         private int deg;
-        private float gust;
     }
 
     public static class Cloud {

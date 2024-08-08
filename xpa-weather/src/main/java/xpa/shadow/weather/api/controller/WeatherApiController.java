@@ -26,17 +26,17 @@ public class WeatherApiController {
 
     @GetMapping
     public ResponseEntity<Object> getWeather(HttpServletRequest request,
-                                             @RequestParam("q") String address,
+                                             @RequestParam("q") String location,
                                              @RequestParam(value = "units", required = false, defaultValue = "metric") Units units,
                                              @RequestParam("geo-api-key") String geocodingApiKey,
                                              @RequestParam("weather-api-key") String weatherApiKey) {
         log.info("Getting weather information...");
 
-        if (address.isBlank()) {
+        if (location.isBlank()) {
             log.warn("Address is empty!");
             ApiError error = new ApiError();
             error.setHttpStatus(HttpStatus.BAD_REQUEST);
-            error.setMessage("Empty address");
+            error.setMessage("Empty location");
             error.setPath(request.getRequestURI());
             return ResponseEntity.badRequest().body(error);
         }
@@ -59,7 +59,7 @@ public class WeatherApiController {
             return ResponseEntity.badRequest().body(error);
         }
 
-        Optional<Weather> weather = weatherService.getWeather(geocodingApiKey, weatherApiKey, address, units);
+        Optional<Weather> weather = weatherService.getWeather(geocodingApiKey, weatherApiKey, location, units);
 
         if (weather.isEmpty()) {
             log.warn("No weather information!");

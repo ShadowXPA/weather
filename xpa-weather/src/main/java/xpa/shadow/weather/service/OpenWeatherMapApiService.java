@@ -52,7 +52,6 @@ public class OpenWeatherMapApiService implements WeatherApiService {
                         OpenWeatherMapResponse.class);
                 Weather weather = openWeatherMapResponse.toWeather();
 
-                weather.setCoordinates(coordinates);
                 return Optional.of(weather);
             }
         } catch (Exception ex) {

@@ -4,7 +4,10 @@ import com.google.gson.annotations.SerializedName;
 
 import java.util.List;
 
-public class OpenWeatherMapResponse {
+/**
+ * OWM = OpenWeatherMap
+ */
+public class OWMCurrentWeatherResponse {
 
     private List<Weather> weather;
     private Main main;
@@ -14,17 +17,19 @@ public class OpenWeatherMapResponse {
     private long dt;
     private Sys sys;
     private long timezone;
+    private String name;
 
     public xpa.shadow.weather.model.Weather toWeather() {
         Weather weather = this.weather.get(0);
 
         return xpa.shadow.weather.model.Weather.builder()
+                .location(name)
                 .condition(weather.main)
                 .description(weather.description)
                 .icon(weather.icon)
                 .temperature(main.temp)
                 .feelsLike(main.feelsLike)
-                .pressure(main.pressure)
+                .pressureSeaLevel(main.seaLevel)
                 .pressureGroundLevel(main.grndLevel)
                 .humidity(main.humidity)
                 .visibility(visibility)
@@ -35,7 +40,7 @@ public class OpenWeatherMapResponse {
                 .countryCode(sys.country)
                 .sunrise(sys.sunrise)
                 .sunset(sys.sunset)
-                .timeShift(timezone)
+                .timezone(timezone)
                 .build();
     }
 
@@ -49,7 +54,8 @@ public class OpenWeatherMapResponse {
         private float temp;
         @SerializedName("feels_like")
         private float feelsLike;
-        private int pressure;
+        @SerializedName("sea_level")
+        private int seaLevel;
         @SerializedName("grnd_level")
         private int grndLevel;
         private int humidity;

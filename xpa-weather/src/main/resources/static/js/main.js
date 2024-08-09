@@ -1,8 +1,9 @@
 $(() => {
     const body = $('body')
     const form = $('#weather-form')
-    let theme = localStorage.getItem('theme') ?? 'day'
+    let theme = localStorage.getItem('theme') ?? 'light'
     let units = localStorage.getItem('units') ?? 'metric'
+    let savedSearch = JSON.parse(localStorage.getItem('savedSearch')) ?? {}
 
     const setLoading = (loading) => {
         if (loading) {
@@ -12,11 +13,28 @@ $(() => {
         }
     }
 
+    const saveSearch = () => {
+        $('#weather-form input[type=text]').each((index, elem) => {
+            const input = $(elem)
+            savedSearch[input.prop('id')] = input.val()
+        })
+
+        localStorage.setItem('savedSearch', JSON.stringify(savedSearch))
+    }
+
+    const loadSearch = () => {
+        savedSearch = JSON.parse(localStorage.getItem('savedSearch')) ?? {}
+
+        $('#weather-form input[type=text]').each((index, elem) => {
+            const input = $(elem)
+            input.val(savedSearch[input.prop('id')] ?? '')
+        })
+    }
+
     $('[name=theme]').on('click', (event) => {
         theme = $('[name=theme]:checked').val()
         localStorage.setItem('theme', theme)
-        body.removeClass()
-        body.addClass(theme)
+        $('html').attr('data-bs-theme', theme)
     })
 
     $('[name=units]').on('click', (event) => {
@@ -88,4 +106,10 @@ $(() => {
 
         form.addClass('was-validated')
     })
+
+    $('#weather-form #btn-save').on('click', saveSearch)
+
+    if ($('#weather-info').length === 0) {
+        loadSearch()
+    }
 })

@@ -24,4 +24,14 @@ public enum Language {
 
         return Language.ENGLISH;
     }
+
+    public static Language getByLang(String lang) {
+        for (Language language : Language.values()) {
+            if (language.lang.equals(lang)) {
+                return language;
+            }
+        }
+
+        return Language.ENGLISH;
+    }
 }

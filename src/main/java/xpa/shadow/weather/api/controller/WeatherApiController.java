@@ -30,7 +30,8 @@ public class WeatherApiController {
                                              @RequestParam("q") String location,
                                              @RequestParam(value = "units", required = false, defaultValue = "metric") Units units,
                                              @RequestParam("geo-api-key") String geocodingApiKey,
-                                             @RequestParam("weather-api-key") String weatherApiKey) {
+                                             @RequestParam("weather-api-key") String weatherApiKey,
+                                             @RequestParam(value = "lang", required = false) String lang) {
         log.info("Getting weather information...");
 
         if (location.isBlank()) {
@@ -60,8 +61,12 @@ public class WeatherApiController {
             return ResponseEntity.badRequest().body(error);
         }
 
-        Optional<Weather> weather = weatherService.getWeather(geocodingApiKey, weatherApiKey, location, units,
-                Language.getByLocale(request.getLocale()));
+        Language language = (lang == null || lang.isBlank())
+                ? Language.getByLocale(request.getLocale())
+                : Language.getByLang(lang);
+
+        Optional<Weather> weather =
+                weatherService.getWeather(geocodingApiKey, weatherApiKey, location, units, language);
 
         if (weather.isEmpty()) {
             log.warn("No weather information!");

@@ -28,7 +28,7 @@ public class OpenWeatherMapApiService implements WeatherApiService {
     private Gson gson;
 
     @Override
-    public Optional<Weather> getWeather(String apiKey, Coordinates coordinates, Units units) {
+    public Optional<Weather> getWeather(String apiKey, Coordinates coordinates, Units units, Language language) {
         log.info("Getting weather and forecast for coordinates: {}...", coordinates);
         log.debug("Using API Key: {}", apiKey);
 
@@ -36,13 +36,15 @@ public class OpenWeatherMapApiService implements WeatherApiService {
                 + "appid=" + URLEncoder.encode(apiKey, StandardCharsets.UTF_8)
                 + "&lat=" + coordinates.getLatitude()
                 + "&lon=" + coordinates.getLongitude()
-                + "&units=" + units.name().toLowerCase());
+                + "&units=" + units.name().toLowerCase()
+                + "&lang=" + language.getLang());
 
         HttpGet forecastRequest = new HttpGet("https://api.openweathermap.org/data/2.5/forecast?"
                 + "appid=" + URLEncoder.encode(apiKey, StandardCharsets.UTF_8)
                 + "&lat=" + coordinates.getLatitude()
                 + "&lon=" + coordinates.getLongitude()
-                + "&units=" + units.name().toLowerCase());
+                + "&units=" + units.name().toLowerCase()
+                + "&lang=" + language.getLang());
 
         try (CloseableHttpResponse weatherResponse = httpClient.execute(weatherRequest);
              CloseableHttpResponse forecastResponse = httpClient.execute(forecastRequest)) {

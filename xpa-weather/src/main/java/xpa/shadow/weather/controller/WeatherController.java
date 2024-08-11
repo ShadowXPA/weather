@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import xpa.shadow.weather.model.Language;
 import xpa.shadow.weather.model.Units;
 import xpa.shadow.weather.model.Weather;
 import xpa.shadow.weather.service.WeatherService;
@@ -30,12 +31,14 @@ public class WeatherController {
     }
 
     @PostMapping
-    public String getWeather(@RequestParam("location") String location,
+    public String getWeather(HttpServletRequest request,
+                             @RequestParam("location") String location,
                              @RequestParam(value = "units", required = false, defaultValue = "metric") Units units,
                              @RequestParam("weather-api-key") String weatherApiKey,
                              @RequestParam("geocoding-api-key") String geocodingApiKey,
                              RedirectAttributes redirectAttributes) {
-        Optional<Weather> weather = weatherService.getWeather(geocodingApiKey, weatherApiKey, location, units);
+        Optional<Weather> weather = weatherService.getWeather(geocodingApiKey, weatherApiKey, location, units,
+                Language.getByLocale(request.getLocale()));
         redirectAttributes.addFlashAttribute("location", location);
         redirectAttributes.addFlashAttribute("units", units);
         redirectAttributes.addFlashAttribute("isMetric", units == Units.METRIC);

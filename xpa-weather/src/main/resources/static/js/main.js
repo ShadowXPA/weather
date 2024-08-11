@@ -1,7 +1,7 @@
 $(() => {
     const body = $('body')
     const form = $('#weather-form')
-    let theme = localStorage.getItem('theme') ?? 'light'
+    let theme = localStorage.getItem('theme') ?? window.matchMedia("(prefers-color-scheme: dark)").matches ? 'dark' : 'light'
     let units = localStorage.getItem('units') ?? 'metric'
     let savedSearch = JSON.parse(localStorage.getItem('savedSearch')) ?? {}
 

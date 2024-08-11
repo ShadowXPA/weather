@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Weather App</title>
+    <title>XPA Weather</title>
     <link rel="icon" type="image/x-icon" th:href="@{~/img/xpa-icon-no-bg.ico}"/>
     <link rel="stylesheet" th:href="@{~/lib/bootstrap/css/bootstrap-reboot.min.css}"/>
     <link rel="stylesheet" th:href="@{~/lib/bootstrap/css/bootstrap.min.css}"/>
@@ -20,13 +20,14 @@
 <body>
 <div id="loading" class="d-flex justify-content-center align-items-center d-none">
     <div class="spinner-border text-primary" role="status">
-        <span class="visually-hidden">Loading...</span>
+        <span class="visually-hidden" th:text="#{app.loading}"></span>
     </div>
 </div>
 <div layout:fragment="content" class="container p-3">
 </div>
 <footer class="rounded-start">
-    <span>Made by <a href="https://www.github.com/ShadowXPA" target="_blank">Pedro Alves</a></span>
+    <span th:text="#{app.made-by}"></span>
+    <a th:href="@{https://www.github.com/ShadowXPA}" target="_blank">Pedro Alves</a>
 </footer>
 </body>
 </html>

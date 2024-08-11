@@ -17,9 +17,7 @@ public class LoggingFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         ThreadContext.put("id", UUID.randomUUID().toString().substring(0, 8));
-        ThreadContext.put("ip", request.getRemoteAddr());
         filterChain.doFilter(request, response);
-        ThreadContext.remove("ip");
         ThreadContext.remove("id");
     }
 }

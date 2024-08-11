@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import xpa.shadow.weather.api.error.ApiError;
+import xpa.shadow.weather.model.Language;
 import xpa.shadow.weather.model.Units;
 import xpa.shadow.weather.model.Weather;
 import xpa.shadow.weather.service.WeatherService;
@@ -59,7 +60,8 @@ public class WeatherApiController {
             return ResponseEntity.badRequest().body(error);
         }
 
-        Optional<Weather> weather = weatherService.getWeather(geocodingApiKey, weatherApiKey, location, units);
+        Optional<Weather> weather = weatherService.getWeather(geocodingApiKey, weatherApiKey, location, units,
+                Language.getByLocale(request.getLocale()));
 
         if (weather.isEmpty()) {
             log.warn("No weather information!");

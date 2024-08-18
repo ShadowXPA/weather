@@ -11,6 +11,7 @@ The application lets you insert your weather and geocoding API keys in their res
 After you have inserted the keys, you can type in a location, or use the `Use my location` button to get your address automatically.
 Then simply get the weather.  
 You will see the location, the current weather, and the forecast for the next 5 days with 3-hour steps.  
+This application supports both English and Portuguese languages.  
 
 ## The API
 

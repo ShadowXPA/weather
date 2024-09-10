@@ -2,18 +2,18 @@
 
 The typical Weather app using [OpenWeatherMap](https://openweathermap.org/) and [Geocoding](https://geocode.maps.co) APIs.
 
-## The web application
+## Web application
 
-<img src="screenshots/screenshot-1.png" alt="Main page" width="1000"/>
-<img src="screenshots/screenshot-2.png" alt="Main page" width="1000"/>
+![Main Page](screenshots/screenshot-1.png "Main page")
+![Main Page](screenshots/screenshot-2.png "Main page")
 
 The application lets you insert your weather and geocoding API keys in their respective fields.
 After you have inserted the keys, you can type in a location, or use the `Use my location` button to get your address automatically.
 Then simply get the weather.  
 You will see the location, the current weather, and the forecast for the next 5 days with 3-hour steps.  
-This application supports both English and Portuguese languages.  
+This application supports both English and Portuguese languages (through [Accept-Language header](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Accept-Language)).  
 
-## The API
+## API
 
 ### Get weather
 
@@ -127,12 +127,18 @@ All fields are mandatory.
 ```
 </details>
 
-## Running the application
+## Installation
 
-Head to the [Releases](https://github.com/ShadowXPA/xpa-weather/releases) tab and download the latest version available.  
-To run the application simply use `java -jar weather-{version}.jar` in the console.  
+### Prerequisites
 
-You can also run it from your IDE by running the main function...  
+- [Java 17+](https://www.oracle.com/java/technologies/downloads/)
+
+### Run
+
+Head to the [Releases](https://github.com/ShadowXPA/weather/releases/latest) tab and download the latest version available.  
+To run the application simply use `java -jar weather-[VERSION].jar` in the console.  
+
+You can also run it from your IDE by running the main function.  
 
 Open a browser window and head to `localhost:8080` to start using the web application.  
 You will need an [OpenWeatherMap](https://openweathermap.org/) API key and a [Geocoding](https://geocode.maps.co) API key.  
@@ -140,4 +146,4 @@ Create an account with both services to get a key (it's free).
 Insert each key in their respective text inputs.
 If you do not want to keep inserting the keys all the time press the save button.
 It will save your keys in the browser's local storage.  
-Insert a location, and get the weather, provided by OpenWeatherMap.  
+Insert a location, and get the weather (provided by OpenWeatherMap).  

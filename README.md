@@ -132,6 +132,8 @@ All fields are mandatory.
 ### Prerequisites
 
 - [Java 17+](https://www.oracle.com/java/technologies/downloads/)
+- [OpenWeatherMap API Key](https://openweathermap.org/)
+- [Geocoding API Key](https://geocode.maps.co)
 
 ### Run
 
